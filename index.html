@@ -1,17 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>LinkZen Bookmarklet</title>
-  <script>
-    const url = encodeURIComponent(document.referrer || window.location.href);
-    const title = encodeURIComponent(document.title || "Untitled");
-    const targetUrl = "https://lumo250.github.io/LinkZen/#add?" + 
-      new URLSearchParams({ type: "linkzen-add", url, title }).toString();
-    window.location.href = targetUrl;
-  </script>
+  <meta charset="UTF-8">
+  <title>Aggiungi LinkZen</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+    }
+    a.bookmarklet {
+      display: inline-block;
+      font-size: 16px;
+      font-weight: bold;
+      color: white;
+      background-color: #2196F3;
+      padding: 10px 14px;
+      border-radius: 8px;
+      text-decoration: none;
+    }
+  </style>
 </head>
 <body>
-  <p>Redirecting to LinkZen...</p>
+  <h2>📌 Aggiungi LinkZen alla tua pagina Safari</h2>
+  <p>Tieni premuto sul pulsante qui sotto e scegli <strong>“Aggiungi ai Preferiti”</strong>.</p>
+  <p>Quando visiterai una pagina che vuoi salvare, basterà toccare questo segnalibro.</p>
+
+  <a class="bookmarklet" href="javascript:(function(){const%20url=encodeURIComponent(location.href);const%20title=encodeURIComponent(document.title);window.location.href='https://tuo-dominio.github.io/linkzen/?title='+title+'&url='+url;})();">
+    ➕ Salva in LinkZen
+  </a>
 </body>
 </html>
