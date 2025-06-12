@@ -1,56 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>LinkZen Bookmarklet</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      padding: 2em;
-      line-height: 1.5;
-    }
-    a.bookmarklet {
-      display: inline-block;
-      padding: 10px 15px;
-      background: #2c3e50;
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
-      font-size: 16px;
-      margin-top: 20px;
-    }
-    a.bookmarklet:hover {
-      background: #1abc9c;
-    }
-    code {
-      background: #eee;
-      padding: 2px 4px;
-      border-radius: 4px;
-    }
-  </style>
-</head>
-<body>
-  <h1>LinkZen Bookmarklet</h1>
-  <p>Trascina il pulsante qui sotto nella barra dei preferiti del browser:</p>
-  <a class="bookmarklet" href="javascript:(function(){
-    const url = encodeURIComponent(window.location.href);
-    const title = encodeURIComponent(document.title || '');
-    const links = document.querySelectorAll('link[rel~=\'icon\']');
-    const favicon = links.length ? encodeURIComponent(links[0].href) : '';
-    const target = `https://lumo250.github.io/LinkZen/#add?addurl=${url}&addtitle=${title}&addicon=${favicon}`;
-    window.open(target, '_blank');
-  })()">👉 Salva con LinkZen</a>
+javascript:(function(){
+  try {
+    const title = document.title || '';
+    const url = window.location.href;
+    let favicon = '';
 
-  <p>Puoi anche copiare questo codice e incollarlo manualmente in un segnalibro se preferisci:</p>
-  <pre><code>javascript:(function(){
-    const url = encodeURIComponent(window.location.href);
-    const title = encodeURIComponent(document.title || '');
-    const links = document.querySelectorAll('link[rel~=\'icon\']');
-    const favicon = links.length ? encodeURIComponent(links[0].href) : '';
-    const target = `https://lumo250.github.io/LinkZen/#add?addurl=${url}&addtitle=${title}&addicon=${favicon}`;
-    window.open(target, '_blank');
-  })()</code></pre>
-</body>
-</html>
+    // Provo a leggere la favicon dal DOM
+    const linkIcons = document.querySelectorAll('link[rel~="icon"]');
+    if(linkIcons.length){
+      // prendo il primo valido
+      favicon = linkIcons[0].href || '';
+    } else {
+      // fallback su /favicon.ico
+      favicon = window.location.origin + '/favicon.ico';
+    }
 
+    const entry = { title, url, favicon, timestamp: Date.now() };
 
+    // Salvo in localStorage con chiave che LinkZen riconosce
+    localStorage.setItem('linkZenNewEntry', JSON.stringify(entry));
+
+    alert('LinkZen: nuovo link salvato per aggiunta automatica.');
+  } catch(e){
+    alert('Errore nel bookmarklet LinkZen: '+e.message);
+  }
+})();
