@@ -1,12 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <title>Aggiungi LinkZen</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aggiungi Bookmarklet LinkZen</title>
   <style>
     body {
-      font-family: sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
       padding: 20px;
+      line-height: 1.6;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    h1 {
+      font-size: 22px;
+      margin-bottom: 10px;
     }
     a.bookmarklet {
       display: inline-block;
@@ -17,16 +25,35 @@
       padding: 10px 14px;
       border-radius: 8px;
       text-decoration: none;
+      word-break: break-word;
+    }
+    .instructions {
+      background: #fff;
+      padding: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
     }
   </style>
 </head>
 <body>
-  <h2>📌 Aggiungi LinkZen alla tua pagina Safari</h2>
-  <p>Tieni premuto sul pulsante qui sotto e scegli <strong>“Aggiungi ai Preferiti”</strong>.</p>
-  <p>Quando visiterai una pagina che vuoi salvare, basterà toccare questo segnalibro.</p>
 
-  <a class="bookmarklet" href="javascript:(function(){const%20url=encodeURIComponent(location.href);const%20title=encodeURIComponent(document.title);window.location.href='https://Lumo250.github.io/LinkZen/?title='+title+'&url='+url;})();">
-    ➕ Salva in LinkZen
-  </a>
+  <h1>📌 Aggiungi il Bookmarklet di LinkZen</h1>
+
+  <div class="instructions">
+    <p>Segui questi passaggi direttamente da <strong>Safari su iPhone</strong>:</p>
+    <ol>
+      <li>Tieni premuto il pulsante qui sotto.</li>
+      <li>Seleziona <strong>“Aggiungi ai Preferiti”</strong>.</li>
+      <li>Dagli un nome come <em>“Salva in LinkZen”</em>.</li>
+    </ol>
+    <p>Quando sei su una pagina che vuoi salvare, tocca il preferito e il link verrà inviato a LinkZen automaticamente. ✨</p>
+  </div>
+
+  <p style="margin-top: 20px;">
+    <a class="bookmarklet" href="javascript:(function(){const url=encodeURIComponent(location.href);const title=encodeURIComponent(document.title);window.location.href='https://lumo250.github.io/linkzen/?title='+title+'&url='+url;})();">
+      ➕ Salva in LinkZen
+    </a>
+  </p>
+
 </body>
 </html>
