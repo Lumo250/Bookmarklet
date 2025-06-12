@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>LinkZen Bookmarklet</title>
+  <script>
+    const url = encodeURIComponent(document.referrer || window.location.href);
+    const title = encodeURIComponent(document.title || "Untitled");
+    const targetUrl = "https://lumo250.github.io/LinkZen/#add?" + 
+      new URLSearchParams({ type: "linkzen-add", url, title }).toString();
+    window.location.href = targetUrl;
+  </script>
+</head>
+<body>
+  <p>Redirecting to LinkZen...</p>
+</body>
+</html>
