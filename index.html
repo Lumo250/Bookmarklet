@@ -1,40 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>LinkZen Bookmarklet</title>
+    <title>LinkZen Bridge</title>
     <script>
-        // Funzione che salva i dati in localStorage prima di aprire LinkZen
-        function saveAndRedirect() {
-            const data = {
-                title: encodeURIComponent(document.title || ''),
-                url: encodeURIComponent(window.location.href),
-                timestamp: Date.now()
-            };
-            
-            // Salva i dati in localStorage
-            localStorage.setItem('linkzen_bookmarklet_data', JSON.stringify(data));
-            
-            // Prova ad aprire/reindirizzare LinkZen
-            try {
-                // Prima prova con window.open
-                const linkzenWin = window.open('https://lumo250.github.io/LinkZen/', '_blank');
-                
-                // Fallback per iOS se window.open fallisce
-                setTimeout(() => {
-                    if (!linkzenWin || linkzenWin.closed) {
-                        window.location.href = 'https://lumo250.github.io/LinkZen/';
-                    }
-                }, 100);
-            } catch(e) {
-                window.location.href = 'https://lumo250.github.io/LinkZen/';
-            }
-        }
+        // Estrai l'URL dalla hash
+        const sourceUrl = decodeURIComponent(window.location.hash.substring(1));
         
-        // Esegui automaticamente quando la pagina viene caricata
-        saveAndRedirect();
+        // Reindirizza a LinkZen con i parametri corretti
+        if (sourceUrl) {
+            const sourcePage = window.open(sourceUrl, '_blank');
+            sourcePage.onload = function() {
+                const title = encodeURIComponent(sourcePage.document.title || '');
+                const url = encodeURIComponent(sourceUrl);
+                window.location.href = `https://lumo250.github.io/LinkZen/?bookmarklet=1&title=${title}&url=${url}`;
+                window.close();
+            };
+        }
     </script>
 </head>
 <body>
-    <p>Reindirizzamento a LinkZen in corso...</p>
+    <p>Elaborazione in corso...</p>
 </body>
 </html>
