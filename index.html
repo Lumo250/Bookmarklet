@@ -3,35 +3,38 @@
 <head>
     <title>LinkZen Bookmarklet</title>
     <script>
-        // Funzione principale che verrà eseguita quando richiamata
-        function addToLinkZen() {
+        // Funzione che salva i dati in localStorage prima di aprire LinkZen
+        function saveAndRedirect() {
+            const data = {
+                title: encodeURIComponent(document.title || ''),
+                url: encodeURIComponent(window.location.href),
+                timestamp: Date.now()
+            };
+            
+            // Salva i dati in localStorage
+            localStorage.setItem('linkzen_bookmarklet_data', JSON.stringify(data));
+            
+            // Prova ad aprire/reindirizzare LinkZen
             try {
-                const title = encodeURIComponent(window.document.title || '');
-                const url = encodeURIComponent(window.location.href);
-                const linkzenUrl = `https://lumo250.github.io/LinkZen/?bookmarklet=1&title=${title}&url=${url}`;
+                // Prima prova con window.open
+                const linkzenWin = window.open('https://lumo250.github.io/LinkZen/', '_blank');
                 
-                // Prova a riutilizzare la stessa finestra
-                const linkzenWindow = window.open('', 'linkzenWindow');
-                if (linkzenWindow && !linkzenWindow.closed) {
-                    linkzenWindow.location.href = linkzenUrl;
-                    linkzenWindow.focus();
-                } else {
-                    window.open(linkzenUrl, 'linkzenWindow');
-                }
+                // Fallback per iOS se window.open fallisce
+                setTimeout(() => {
+                    if (!linkzenWin || linkzenWin.closed) {
+                        window.location.href = 'https://lumo250.github.io/LinkZen/';
+                    }
+                }, 100);
             } catch(e) {
-                console.error("Bookmarklet error:", e);
+                window.location.href = 'https://lumo250.github.io/LinkZen/';
             }
         }
         
-        // Esegui automaticamente se aperto direttamente
-        if(window === window.top) {
-            addToLinkZen();
-            window.close(); // Chiudi questa pagina dopo l'esecuzione
-        }
+        // Esegui automaticamente quando la pagina viene caricata
+        saveAndRedirect();
     </script>
 </head>
 <body>
-    <h1>LinkZen Bookmarklet</h1>
-    <p>Questa pagina aggiunge automaticamente la pagina corrente a LinkZen.</p>
+    <p>Reindirizzamento a LinkZen in corso...</p>
 </body>
 </html>
