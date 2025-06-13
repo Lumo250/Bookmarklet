@@ -1,59 +1,37 @@
 <!DOCTYPE html>
-<html lang="it">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aggiungi Bookmarklet LinkZen</title>
-  <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-      padding: 20px;
-      line-height: 1.6;
-      background-color: #f9f9f9;
-      color: #333;
-    }
-    h1 {
-      font-size: 22px;
-      margin-bottom: 10px;
-    }
-    a.bookmarklet {
-      display: inline-block;
-      font-size: 16px;
-      font-weight: bold;
-      color: white;
-      background-color: #2196F3;
-      padding: 10px 14px;
-      border-radius: 8px;
-      text-decoration: none;
-      word-break: break-word;
-    }
-    .instructions {
-      background: #fff;
-      padding: 16px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-    }
-  </style>
+    <title>LinkZen Bookmarklet</title>
+    <script>
+        // Funzione principale che verrà eseguita quando richiamata
+        function addToLinkZen() {
+            try {
+                const title = encodeURIComponent(window.document.title || '');
+                const url = encodeURIComponent(window.location.href);
+                const linkzenUrl = `https://lumo250.github.io/LinkZen/?bookmarklet=1&title=${title}&url=${url}`;
+                
+                // Prova a riutilizzare la stessa finestra
+                const linkzenWindow = window.open('', 'linkzenWindow');
+                if (linkzenWindow && !linkzenWindow.closed) {
+                    linkzenWindow.location.href = linkzenUrl;
+                    linkzenWindow.focus();
+                } else {
+                    window.open(linkzenUrl, 'linkzenWindow');
+                }
+            } catch(e) {
+                console.error("Bookmarklet error:", e);
+            }
+        }
+        
+        // Esegui automaticamente se aperto direttamente
+        if(window === window.top) {
+            addToLinkZen();
+            window.close(); // Chiudi questa pagina dopo l'esecuzione
+        }
+    </script>
 </head>
 <body>
-
-  <h1>📌 Aggiungi il Bookmarklet di LinkZen</h1>
-
-  <div class="instructions">
-    <p>Segui questi passaggi direttamente da <strong>Safari su iPhone</strong>:</p>
-    <ol>
-      <li>Tieni premuto il pulsante qui sotto.</li>
-      <li>Seleziona <strong>“Aggiungi ai Preferiti”</strong>.</li>
-      <li>Dagli un nome come <em>“Salva in LinkZen”</em>.</li>
-    </ol>
-    <p>Quando sei su una pagina che vuoi salvare, tocca il preferito e il link verrà inviato a LinkZen automaticamente. ✨</p>
-  </div>
-
-  <p style="margin-top: 20px;">
-    <a class="bookmarklet" href="javascript:(function(){const url=encodeURIComponent(location.href);const title=encodeURIComponent(document.title);window.location.href='https://lumo250.github.io/linkzen/?title='+title+'&url='+url;})();">
-      ➕ Salva in LinkZen
-    </a>
-  </p>
-
+    <h1>LinkZen Bookmarklet</h1>
+    <p>Questa pagina aggiunge automaticamente la pagina corrente a LinkZen.</p>
 </body>
 </html>
